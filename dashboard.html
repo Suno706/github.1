@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitHub Tracker Dashboard</title>
+</head>
+<body style="margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #0d1117; color: #c9d1d9;">
+
+  <div style="display: flex; min-height: 100vh;">
+    <!-- Sidebar -->
+    <aside style="background-color: #161b22; width: 220px; padding: 1.5rem 1rem; border-right: 1px solid #30363d;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" style="width: 50px; margin-bottom: 0.5rem;" />
+        <h2 id="usernameDisplay" style="font-size: 1rem; margin: 0;">guest-user</h2>
+      </div>
+      <nav>
+        <button onclick="goTo('dashboard.html')" style="width: 100%; background-color: #21262d; border: 1px solid #30363d; padding: 0.6rem; color: #c9d1d9; margin-bottom: 0.5rem; border-radius: 5px; cursor: pointer;">🏠 Dashboard</button>
+        <button onclick="goTo('repos.html')" style="width: 100%; background-color: #21262d; border: 1px solid #30363d; padding: 0.6rem; color: #c9d1d9; margin-bottom: 0.5rem; border-radius: 5px; cursor: pointer;">📁 Repositories</button>
+        <button onclick="goTo('deleted.html')" style="width: 100%; background-color: #21262d; border: 1px solid #30363d; padding: 0.6rem; color: #c9d1d9; margin-bottom: 0.5rem; border-radius: 5px; cursor: pointer;">🗑️ Deleted Files</button>
+        <button onclick="logout()" style="width: 100%; background-color: #da3633; border: none; padding: 0.6rem; color: white; border-radius: 5px; cursor: pointer;">🚪 Logout</button>
+      </nav>
+    </aside>
+
+    <!-- Main Dashboard Content -->
+    <main style="flex: 1; padding: 2rem;">
+      <h1 style="font-size: 1.8rem; margin-bottom: 1rem;">Welcome to GitHub Tracker</h1>
+      <p style="margin-bottom: 1.5rem;">Track your repositories and deleted files easily.</p>
+
+      <div style="display: grid; gap: 1rem;">
+        <div style="background-color: #161b22; padding: 1rem; border-radius: 6px; border: 1px solid #30363d;">
+          <h2 style="margin: 0 0 0.5rem;">🔄 Recent Activity</h2>
+          <ul style="list-style: none; padding-left: 0; font-size: 0.9rem;">
+            <li>✔️ Committed to <strong>github-clone</strong></li>
+            <li>🗑️ Deleted <strong>old-dashboard.js</strong></li>
+            <li>📦 Pushed updates to <strong>portfolio-site</strong></li>
+          </ul>
+        </div>
+
+        <div style="background-color: #161b22; padding: 1rem; border-radius: 6px; border: 1px solid #30363d;">
+          <h2 style="margin: 0 0 0.5rem;">📁 Quick Access</h2>
+          <div style="display: flex; gap: 1rem;">
+            <button onclick="goTo('repos.html')" style="flex: 1; padding: 0.6rem; background-color: #238636; color: white; border: none; border-radius: 5px;">View Repositories</button>
+            <button onclick="goTo('deleted.html')" style="flex: 1; padding: 0.6rem; background-color: #da3633; color: white; border: none; border-radius: 5px;">View Deleted</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const username = localStorage.getItem('githubUser') || "guest-user";
+    document.getElementById('usernameDisplay').textContent = username;
+
+    function goTo(page) {
+      window.location.href = page;
+    }
+
+    function logout() {
+      localStorage.removeItem('githubUser');
+      sessionStorage.removeItem('githubUser');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

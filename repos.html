@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Repositories</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background-color: #0d1117;
+      color: #c9d1d9;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background-color: #161b22;
+      width: 250px;
+      padding: 2rem 1rem;
+      border-right: 1px solid #30363d;
+    }
+
+    .profile {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile img {
+      width: 60px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .profile h2 {
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+
+    .nav button {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      background-color: #21262d;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      padding: 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .nav button:hover {
+      background-color: #30363d;
+    }
+
+    .main {
+      flex-grow: 1;
+      padding: 2rem;
+    }
+
+    .main h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .repo-card {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+
+    .repo-card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .repo-card a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    .repo-card a:hover {
+      text-decoration: underline;
+    }
+
+    .repo-card p {
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo">
+        <h2 id="usernameDisplay">guest-user</h2>
+      </div>
+      <nav class="nav">
+        <button onclick="goTo('dashboard.html')">🏠 Dashboard</button>
+        <button onclick="goTo('deleted.html')">🗑️ Deleted Files</button>
+        <button onclick="logout()">🚪 Logout</button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <h1>Your Repositories</h1>
+      <div id="repoList"></div>
+    </main>
+  </div>
+
+  <script>
+    const username = localStorage.getItem('githubUser') || sessionStorage.getItem('githubUser');
+    document.getElementById('usernameDisplay').textContent = username || "guest-user";
+
+    // Mock data for offline/demo mode
+    const sampleRepos = [
+      {
+        name: "awesome-portfolio",
+        description: "A personal portfolio site built with HTML/CSS/JS",
+        language: "JavaScript",
+        updated_at: "2024-07-04T10:30:00Z"
+      },
+      {
+        name: "github-clone",
+        description: "A GitHub UI clone for educational purposes",
+        language: "HTML",
+        updated_at: "2024-06-28T08:15:00Z"
+      },
+      {
+        name: "deleted-file-tracker",
+        description: "Detects deleted files in Git commits",
+        language: "Python",
+        updated_at: "2024-05-10T12:45:00Z"
+      }
+    ];
+
+    const repoList = document.getElementById('repoList');
+
+    sampleRepos.forEach(repo => {
+      const card = document.createElement('div');
+      card.className = 'repo-card';
+      card.innerHTML = `
+        <h2><a href="#" onclick="openCommits('${repo.name}')">${repo.name}</a></h2>
+        <p>${repo.description}</p>
+        <p><strong>Language:</strong> ${repo.language}</p>
+        <p><strong>Updated:</strong> ${new Date(repo.updated_at).toLocaleString()}</p>
+      `;
+      repoList.appendChild(card);
+    });
+
+    function openCommits(repoName) {
+      localStorage.setItem('repoName', repoName);
+      window.location.href = 'commits.html';
+    }
+
+    function goTo(page) {
+      window.location.href = page;
+    }
+
+    function logout() {
+      localStorage.removeItem('githubUser');
+      sessionStorage.removeItem('githubUser');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
